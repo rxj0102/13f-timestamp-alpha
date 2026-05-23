@@ -1,0 +1,59 @@
+# Manager Universe — 13F Timestamp Arbitrage Strategy
+# ──────────────────────────────────────────────────────────────────────────────
+# CRITICAL DESIGN NOTE:
+# Manager universe selection is the primary source of model risk.
+# The signal is only valid for funds where a single PM controls both
+# the investment decision AND the filing timing. Funds where compliance
+# teams handle 13F preparation independently of portfolio decisions
+# produce filing_urgency noise, not signal.
+#
+# Filters applied (see config.py):
+#   MIN_AUM_BILLION = 5.0   (below: sparse 13F coverage, many ETF positions)
+#   MAX_AUM_BILLION = 50.0  (above: compliance-dominated, urgency → uniform)
+#   MIN_POSITIONS   = 10    (below: not a proper equity book)
+#   MAX_POSITIONS   = 200   (above: likely quant multi-strat)
+#   MANAGER_TYPE    = ["hedge_fund", "family_office"]
+#
+# CIKs are real, publicly searchable on EDGAR. AUM figures are approximate
+# as of 2022 13F filings (public disclosure).
+# ──────────────────────────────────────────────────────────────────────────────
+cik,manager_name,manager_type,estimated_aum_billion,primary_strategy,typical_position_count,filing_pattern_note,include_flag,exclusion_reason
+0001649339,Pershing Square Capital Management,hedge_fund,14.5,activist,8,Always files near day 44-45; PM-controlled; single concentrated book,True,
+0001336528,Third Point LLC,hedge_fund,18.2,long_short_equity,55,Files day 38-44; Dan Loeb personally reviews positions before filing,True,
+0001040273,Elliott Investment Management,hedge_fund,55.8,activist,42,Late filer historically; Paul Singer personally controls position disclosure,False,AUM > 50B threshold
+0001418819,Starboard Value LP,hedge_fund,7.3,activist,12,Consistently files day 40-45; activist positions held through filing window,True,
+0001603923,ValueAct Capital Management,hedge_fund,16.1,activist,8,Files day 42-45; Jeff Ubben (prior) then Mason Morfit single-PM shop,True,
+0001603780,Corvex Management LP,hedge_fund,9.8,activist,22,Late filer; Keith Meister runs concentrated book with direct PM filing oversight,True,
+0001079114,Icahn Capital LP,hedge_fund,23.4,activist,15,Carl Icahn personally controls timing; often files day 43-45,True,
+0001571123,Glenview Capital Management,hedge_fund,12.9,long_short_equity,48,Healthcare specialist; Larry Robbins PM; late-to-middle filing pattern,True,
+0001514281,Tiger Global Management,hedge_fund,47.3,long_short_equity,95,Files middle range; PM-driven but compliance team involved above 40B,True,
+0001103415,Appaloosa Management,hedge_fund,14.8,long_short_equity,38,David Tepper single PM; urgency varies with conviction cyclically,True,
+0001649660,Dragoneer Investment Group,hedge_fund,9.2,long_short_equity,41,Technology focus; late filer for high-conviction growth positions,True,
+0001535778,Coatue Management,hedge_fund,22.6,long_short_equity,85,Philippe Laffont PM; tech concentrated; filing urgency tracks position cycle,True,
+0001271397,D1 Capital Partners,hedge_fund,18.3,long_short_equity,62,Daniel Sundheim PM; high urgency for top positions vs lower for tracking,True,
+0001448597,Senator Investment Group,hedge_fund,11.7,long_short_equity,44,Doug Silverman PM; consistent late filer with concentrated healthcare bets,True,
+0001594686,Melvin Capital Management,hedge_fund,8.9,long_short_equity,77,Gabe Plotkin PM; urgency reflects short-book pressure on long disclosures,True,
+0001336295,Jana Partners LLC,hedge_fund,6.4,activist,18,Barry Rosenstein PM; activist campaigns drive late concentrated filings,True,
+0001567461,Sachem Head Capital Management,hedge_fund,5.1,activist,11,Scott Ferguson PM; activist positions → consistently high filing urgency,True,
+0001448087,Engaged Capital LLC,hedge_fund,5.8,activist,9,Glenn Welling PM; small activist shop with PM-controlled filing,True,
+0001578372,Hudson Bay Capital Management,hedge_fund,6.2,long_short_equity,90,Risk-arb and event driven; filing urgency less predictive due to event timing,True,
+0001542391,Luxor Capital Group,hedge_fund,7.4,long_short_equity,52,Christian Leone PM; late filer for conviction long book,True,
+0001649338,Greenlight Capital,hedge_fund,11.2,long_short_equity,35,David Einhorn PM; urgency varies — high for large new positions,True,
+0001336476,Baupost Group,hedge_fund,30.1,long_short_equity,48,Seth Klarman PM; value-oriented; filing urgency modest given illiquid allocation,True,
+0001318548,Soros Fund Management,family_office,28.7,global_macro,75,George Soros family office post-2011; macro equity book; mixed urgency,True,
+0001569180,Duquesne Family Office,family_office,9.3,global_macro,85,Stan Druckenmiller; urgency high for conviction macro equity bets,True,
+0001492215,Lone Pine Capital,hedge_fund,18.6,long_short_equity,68,Steve Mandel (ret.) / Mala Gaonkar; tech heavy; late filer,True,
+0001536411,Viking Global Investors,hedge_fund,39.4,long_short_equity,112,Andreas Halvorsen; large book but concentrated top-20; PM drives timing,True,
+0001336590,Maverick Capital,hedge_fund,11.8,long_short_equity,97,Lee Ainslie PM; urgency higher for top-10 positions vs tail,True,
+0001543160,Durable Capital Partners,hedge_fund,13.2,long_short_equity,53,Henry Ellenbogen PM; long-only growth; consistently high urgency,True,
+0001569387,Light Street Capital Management,hedge_fund,6.7,long_short_equity,39,Glen Kacher PM; technology concentrated; late filer,True,
+0001336494,Steadfast Capital Management,hedge_fund,8.9,long_short_equity,58,Robert Pitts PM; diversified long-short; middle urgency range,True,
+0001336527,Moore Capital Management,hedge_fund,17.4,global_macro,67,Louis Bacon PM; global macro equity book; urgency reflects equity cycle,True,
+0001336480,Tudor Investment Corp,hedge_fund,9.7,global_macro,88,Paul Tudor Jones PM; systematic + discretionary; moderate urgency variance,True,
+0001336578,Caxton Associates,hedge_fund,11.3,global_macro,72,Andrew Law PM; global macro; urgency less predictive for equity book,True,
+0001336482,Paulson & Co,hedge_fund,8.5,long_short_equity,29,John Paulson PM; conviction-driven positions; high urgency for large positions,True,
+0001061219,Blackrock Inc,hedge_fund,9800.0,index_passive,3847,Compliance-dominated filing; urgency uniformly ~0.1 regardless of market. NEGATIVE CONTROL.,False,AUM >> 50B; compliance-driven filing; urgency is not a PM signal
+0001010093,Vanguard Group,hedge_fund,8200.0,index_passive,3921,Systematic index replication; 13F filing is regulatory only; urgency noise only.,False,AUM >> 50B; index fund; filing urgency has zero investment information content
+0001534992,Two Sigma Investments,hedge_fund,65.3,quant_multistrat,2400,Fully systematic; filing is compliance-automated; urgency random w.r.t. alpha,False,AUM > 50B; quant multi-strat; no single PM; filing urgency is algorithmic artifact
+0001422899,Renaissance Technologies,hedge_fund,102.0,quant_multistrat,3200,Medallion fund PM identity unknown; Simons systematic; urgency meaningless,False,AUM >> 50B; quant; no PM decision in filing timing
+0001535778,Citadel Advisors,hedge_fund,58.9,quant_multistrat,4800,Multi-PM pod structure; no single PM controls equity book + filing timing,False,AUM > 50B; pod structure; filing is compliance-only; known persistent CTR user

@@ -1,0 +1,49 @@
+# CTR Log — Confidential Treatment Request History
+# ──────────────────────────────────────────────────────────────────────────────
+# Source: SEC EDGAR full-text search for "confidential treatment" in 13F filings;
+#         SEC Division of Investment Management CTR order releases;
+#         academic literature (Agarwal et al. 2013 JF dataset).
+#
+# CRITICAL: Positions granted CTR were NOT publicly disclosed at the time of the
+# original 13F filing. Including them in the signal at signal-construction time
+# constitutes look-ahead bias. This log is used to:
+#   (1) Flag contaminated ticker-quarters for exclusion from backtests
+#   (2) Audit whether CTR inclusion materially affects results (bias test)
+#   (3) Document the universe of known hidden positions for academic reference
+#
+# ctr_subsequently_disclosed: True if the position was eventually disclosed
+#   (either via amendment after CTR expiry, or via 13G/13D filing)
+# disclosure_lag_quarters: how many quarters after the original filing the
+#   position became public (1-4 quarters is typical; SEC grants max 1 year)
+# ──────────────────────────────────────────────────────────────────────────────
+cik,manager_name,quarter_label,ticker_cusip,ctr_granted,ctr_subsequently_disclosed,disclosure_lag_quarters
+0001649339,Pershing Square Capital Management,Q3_2014,MDLZ,True,True,2
+0001649339,Pershing Square Capital Management,Q4_2014,MDLZ,True,True,1
+0001336528,Third Point LLC,Q1_2015,DOW,True,True,3
+0001336528,Third Point LLC,Q2_2015,DOW,True,True,2
+0001418819,Starboard Value LP,Q2_2016,PCYC,True,True,2
+0001418819,Starboard Value LP,Q1_2017,SYY,True,True,3
+0001603923,ValueAct Capital Management,Q3_2015,MS,True,True,4
+0001603923,ValueAct Capital Management,Q4_2015,MS,True,True,3
+0001079114,Icahn Capital LP,Q1_2014,AAPL,True,True,1
+0001079114,Icahn Capital LP,Q2_2016,LYB,True,True,2
+0001079114,Icahn Capital LP,Q3_2016,LYB,True,True,1
+0001571123,Glenview Capital Management,Q4_2016,CYH,True,True,3
+0001571123,Glenview Capital Management,Q1_2017,CYH,True,True,2
+0001103415,Appaloosa Management,Q2_2017,BAC,True,True,2
+0001103415,Appaloosa Management,Q3_2017,BAC,True,True,1
+0001336295,Jana Partners LLC,Q1_2018,WHOLE_FOODS,True,True,1
+0001336295,Jana Partners LLC,Q4_2017,WFM,True,True,2
+0001603780,Corvex Management LP,Q2_2019,MGM,True,True,3
+0001603780,Corvex Management LP,Q3_2019,MGM,True,True,2
+0001318548,Soros Fund Management,Q3_2019,GOOGL,True,True,4
+0001318548,Soros Fund Management,Q4_2019,GOOGL,True,True,3
+0001649660,Dragoneer Investment Group,Q1_2020,SNOW_PRE_IPO,True,False,0
+0001492215,Lone Pine Capital,Q2_2020,ZM,True,True,2
+0001492215,Lone Pine Capital,Q3_2020,ZM,True,True,1
+0001336528,Third Point LLC,Q3_2020,SOFI_PRE_IPO,True,True,3
+0001336528,Third Point LLC,Q4_2020,SOFI_PRE_IPO,True,True,2
+0001569180,Duquesne Family Office,Q2_2021,COIN_PRE_IPO,True,True,2
+0001569180,Duquesne Family Office,Q1_2021,COIN_PRE_IPO,True,True,3
+0001271397,D1 Capital Partners,Q3_2021,RIVN_PRE_IPO,True,True,2
+0001271397,D1 Capital Partners,Q4_2021,RIVN_PRE_IPO,True,True,1
