@@ -57,3 +57,4 @@ cik,manager_name,manager_type,estimated_aum_billion,primary_strategy,typical_pos
 0001534992,Two Sigma Investments,hedge_fund,65.3,quant_multistrat,2400,Fully systematic; filing is compliance-automated; urgency random w.r.t. alpha,False,AUM > 50B; quant multi-strat; no single PM; filing urgency is algorithmic artifact
 0001422899,Renaissance Technologies,hedge_fund,102.0,quant_multistrat,3200,Medallion fund PM identity unknown; Simons systematic; urgency meaningless,False,AUM >> 50B; quant; no PM decision in filing timing
 0001535778,Citadel Advisors,hedge_fund,58.9,quant_multistrat,4800,Multi-PM pod structure; no single PM controls equity book + filing timing,False,AUM > 50B; pod structure; filing is compliance-only; known persistent CTR user
+0001336452,Eminence Capital LLC,hedge_fund,7.8,long_short_equity,62,Ricky Sandler PM; concentrated long-short; filing urgency tracks conviction cycle with consistent late-filer pattern,True,
