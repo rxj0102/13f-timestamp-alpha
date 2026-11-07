@@ -45,7 +45,7 @@ $$\text{conviction\_score}(i, t, k) = \underbrace{\text{filing\_urgency}(i, t)}_
 
 Where:
 
-$$\text{filing\_urgency}(i, t) = \frac{(\text{filing\_deadline} - \text{filing\_date})_{\text{days}}}{45} \in [0, 1]$$
+$$\text{filing\_urgency}(i, t) = 1 - \frac{(\text{filing\_deadline} - \text{filing\_date})_{\text{days}}}{45} \in [0, 1]$$
 
 $$\text{sign}(\Delta) = \begin{cases} +1 & \text{NEW or INCREASED position} \\ -1 & \text{REDUCED or EXITED position} \\ 0 & \text{FLAT (no change)} \end{cases}$$
 
@@ -359,3 +359,8 @@ jupyter notebook notebooks/01_exploratory_analysis.ipynb
 ## Disclaimer
 
 This repository is for academic and educational research purposes only. It does not constitute investment advice, financial advice, or a solicitation to buy or sell any security. The backtested results presented are hypothetical, do not reflect actual trading, and are subject to the limitations described above. Past (simulated) performance is not indicative of future results. The authors have no positions in any of the securities mentioned. SEC EDGAR data is used under the SEC's public access terms — all users must comply with the SEC's rate limiting requirements and terms of service.
+
+## Known limitations
+
+- **Backtest entry date.** `run_long_short_backtest` enters every position in a quarter on the *median* filing date of that quarter's filings. Roughly half of the filings are therefore entered before they were public, which is mild look-ahead. A stricter version would enter each position on its own filing date (or the next trading day). Results should be re-run after that change.
+- **Urgency definition changed.** `filing_urgency` is now `1 - days_remaining/45` (fraction of the window used), matching the thesis that late filers have urgency near 1. Earlier code computed `days_remaining/45`, which inverted the EARLY/LATE buckets. Any cached `universe_filing_history.csv` produced before this fix must be regenerated.
