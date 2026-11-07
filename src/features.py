@@ -19,7 +19,7 @@ For manager *i*, quarter *t*, ticker *k*:
         × log(1 + |delta_pct(i, t, k)|)
 
 Where:
-    filing_urgency = (filing_deadline − filing_date).days / 45   ∈ [0, 1]
+    filing_urgency = 1 − (filing_deadline − filing_date).days / 45   ∈ [0, 1]  (fraction of window used)
     sign(delta)    = +1 for NEW/INCREASED, −1 for REDUCED/EXITED, 0 for FLAT
     log            = natural logarithm
 
@@ -60,7 +60,7 @@ def compute_filing_urgency(
 ) -> pd.DataFrame:
     """Compute and add filing_urgency and urgency_bucket to the filing history.
 
-    ``filing_urgency`` = (filing_deadline − filing_date_only).days / FILING_DEADLINE_DAYS
+    ``filing_urgency`` = 1 − (filing_deadline − filing_date_only).days / FILING_DEADLINE_DAYS
 
     Clamped to [0, 1]. Values > 1 are set to 1.0 with a warning (late filers).
 
@@ -108,7 +108,7 @@ def compute_filing_urgency(
             )
             df = df.drop(columns=["filing_deadline_cal"])
 
-        df["filing_urgency"] = (
+        df["filing_urgency"] = 1.0 - (
             (df["filing_deadline"] - df["filing_date_only"]).dt.days
             / config.FILING_DEADLINE_DAYS
         )
@@ -118,16 +118,16 @@ def compute_filing_urgency(
     under_zero = df["filing_urgency"] < 0.0
     if over_one.any():
         logger.warning(
-            "%d filings with urgency > 1.0 (filed before quarter end?); clamping to 1.0",
+            "%d filings with urgency > 1.0 (filed after deadline); clamping to 1.0",
             over_one.sum(),
         )
         df.loc[over_one, "filing_urgency"] = 1.0
     if under_zero.any():
         logger.warning(
-            "%d filings with urgency < 0.0 (filed after deadline); clamping to 1.0",
+            "%d filings with urgency < 0.0 (filed before quarter end?); clamping to 0.0",
             under_zero.sum(),
         )
-        df.loc[under_zero, "filing_urgency"] = 1.0
+        df.loc[under_zero, "filing_urgency"] = 0.0
 
     # Bucket assignment
     df["urgency_bucket"] = pd.cut(
@@ -185,27 +185,19 @@ def compute_conviction_score(holdings_panel_df: pd.DataFrame) -> pd.DataFrame:
     -----
     **Worked numerical examples** (matching the strategy specification):
 
-    *Example 1 — Late filer, moderate increase:*
-        Manager files on day 40 of 45 → urgency = (45−40)/45 = 0.11... wait:
-        filing_urgency = (deadline − filing_date).days / 45
-        If deadline is day 45 and manager files on day 40:
-            days_remaining = 45 − 40 = 5 → urgency = 5/45 = 0.11
-        That's an EARLY filer. Correction:
-        filing_urgency = days_remaining / 45
-        Day 5 filing: 40 days remain → urgency = 40/45 = 0.89 (LATE)
-        Day 40 filing: 5 days remain → urgency = 5/45 = 0.11 (EARLY)
+    filing_urgency = 1 - days_remaining / 45 = days_elapsed / 45
 
-    *Example 2 — Late filer (high urgency), 25% position increase:*
-        Manager files on the 5th day of the 45-day window (40 days remain):
+    *Example 1 — Late filer, 25% position increase:*
+        Manager files on day 40 of 45 (5 days remain):
             filing_urgency = 40/45 = 0.889
         Position increased by 25% (delta_pct = 0.25):
             conviction = 0.889 × (+1) × log(1.25) = 0.889 × 0.223 = +0.198
 
-    *Example 3 — Early filer (low urgency), new position opened:*
-        Manager files on day 40 of 45 (5 days remain):
+    *Example 2 — Early filer, new position opened:*
+        Manager files on day 5 of 45 (40 days remain):
             filing_urgency = 5/45 = 0.111
         New position (delta_pct = +inf → use log(2.0) as practical proxy for doubling):
-            conviction = 0.111 × (+1) × log(2.0) = 0.111 × 0.693 = +0.076
+            conviction = 0.111 × (+1) × log(2.0) = 0.111 × 0.693 = +0.077
 
         Same bullish action, dramatically different signal strength.
         The late filer's conviction score is 2.6× higher.

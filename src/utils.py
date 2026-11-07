@@ -288,10 +288,10 @@ def next_business_day(date: pd.Timestamp) -> pd.Timestamp:
 
     Examples
     --------
-    >>> next_business_day(pd.Timestamp("2023-11-11"))  # Veterans Day
+    >>> next_business_day(pd.Timestamp("2023-11-10"))  # observed Veterans Day
     Timestamp('2023-11-13 00:00:00')
-    >>> next_business_day(pd.Timestamp("2023-11-10"))  # Friday
-    Timestamp('2023-11-10 00:00:00')
+    >>> next_business_day(pd.Timestamp("2023-11-09"))  # Thursday
+    Timestamp('2023-11-09 00:00:00')
     """
     holidays = _get_holidays()
     d = date.normalize()

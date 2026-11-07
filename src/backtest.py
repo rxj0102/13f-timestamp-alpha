@@ -107,9 +107,9 @@ def _apply_transaction_costs(gross_return: float, tc_bps: int = config.TRANSACTI
 
 
 def _compute_drawdown(cumulative_pnl: pd.Series) -> pd.Series:
-    """Compute the rolling maximum drawdown from a cumulative PnL series."""
+    """Rolling drawdown from an equity curve (start = 1.0), as a negative fraction."""
     rolling_max = cumulative_pnl.cummax()
-    drawdown = (cumulative_pnl - rolling_max) / (1 + rolling_max).clip(lower=1e-10)
+    drawdown = (cumulative_pnl - rolling_max) / rolling_max.clip(lower=1e-10)
     return drawdown
 
 
@@ -200,7 +200,8 @@ def run_long_short_backtest(
             logger.debug("Quarter %s: no long or short positions", q)
             continue
 
-        # Determine entry date: median filing date within the quarter
+        # NOTE: entry = median filing date of the quarter, so roughly half the
+        # filings are entered BEFORE they were public. See README "Known limitations".
         q_dates = pd.to_datetime(signal_df.loc[signal_df["quarter_label"] == q, date_col])
         entry_date = q_dates.median()
         if pd.isna(entry_date):

@@ -542,7 +542,7 @@ def build_manager_filing_history(cik: str, manager_name: str = "") -> pd.DataFra
         * ``has_ctr_amendment``  — bool; True if CTR amendment detected
         * ``n_positions``        — number of positions in the filing (set to 0
                                     here; populated by ``filing_parser``)
-        * ``filing_urgency``     — (deadline − filing_date).days / 45, clamped
+        * ``filing_urgency``     — 1 − (deadline − filing_date).days / 45, clamped
                                     to [0, 1]; higher = later = more convinced
 
     Notes
@@ -594,24 +594,25 @@ def build_manager_filing_history(cik: str, manager_name: str = "") -> pd.DataFra
             )
             continue
 
-        # Compute urgency
+        # Compute urgency = fraction of the filing window used (0 = filed at
+        # quarter end, 1 = filed at the deadline). Later filing -> higher value.
         days_remaining = (deadline - filing_date_only).days
-        raw_urgency = days_remaining / config.FILING_DEADLINE_DAYS
+        raw_urgency = 1.0 - days_remaining / config.FILING_DEADLINE_DAYS
 
         if raw_urgency > 1.0:
             logger.warning(
-                "CIK %s %s: filing_urgency %.3f > 1.0 (filed before quarter end?); "
+                "CIK %s %s: filing_urgency %.3f > 1.0 (filed after deadline); "
                 "clamping to 1.0",
                 cik_norm, q_label, raw_urgency,
             )
             urgency = 1.0
         elif raw_urgency < 0.0:
             logger.warning(
-                "CIK %s %s: filing_urgency %.3f < 0.0 (filed after deadline); "
-                "clamping to 1.0",
+                "CIK %s %s: filing_urgency %.3f < 0.0 (filed before quarter end?); "
+                "clamping to 0.0",
                 cik_norm, q_label, raw_urgency,
             )
-            urgency = 1.0
+            urgency = 0.0
         else:
             urgency = raw_urgency
 

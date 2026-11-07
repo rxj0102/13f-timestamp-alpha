@@ -38,3 +38,6 @@ tqdm>=4.66.0
 
 # Utilities
 python-dotenv>=1.0.0     # optional: load .env for API keys
+
+# Testing
+pytest>=7.0
