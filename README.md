@@ -1,5 +1,7 @@
 # Regulatory Filing Timestamp Arbitrage via 13F Lag Decay
 
+[![CI](https://github.com/rxj0102/13f-timestamp-alpha/actions/workflows/ci.yml/badge.svg)](https://github.com/rxj0102/13f-timestamp-alpha/actions/workflows/ci.yml)
+
 > **Metadata, not content.** Every prior approach to 13F analysis asks *what* hedge funds are holding. This strategy asks *when* they chose to tell you — and treats the answer as a revealed-preference signal about whether they are still holding it.
 
 ---
@@ -302,15 +304,7 @@ jupyter notebook notebooks/01_exploratory_analysis.ipynb
 
 ## Key Findings
 
-*(Placeholder — to be populated after running the full pipeline)*
-
-| Metric | EARLY Filers | MIDDLE Filers | LATE Filers |
-|---|---|---|---|
-| Mean quarterly L/S return | TBD | TBD | TBD |
-| Sharpe ratio (annualised) | TBD | TBD | TBD |
-| Spearman IC (60d horizon) | TBD | TBD | TBD |
-| IC p-value | TBD | TBD | TBD |
-| Win rate | TBD | TBD | TBD |
+**Status:** no results are published yet. They depend on live data that was not available when this repository was last updated. Run the full pipeline above to generate them. Results will be added here only from that run.
 
 ---
 
