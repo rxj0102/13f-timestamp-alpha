@@ -82,7 +82,7 @@ $$\text{staleness\_weight}(t, \tau) = \text{filing\_urgency}(t) \times e^{-\tau 
 
 Where $\tau = \text{days since filing date}$. At $\tau = 45$ days, the weight decays to $\approx 37\%$ of its initial value. Position sizes in a live implementation should scale with this weight.
 
-> **Half-life interpretation:** A 13F signal is approximately half-exhausted 45 days after filing and essentially exhausted by the time the next quarter's filings begin (~90 days). The strategy holding period of 60 days is chosen to capture the majority of the signal before staleness overwhelms it.
+> **Half-life interpretation:** The decay constant of 45 days is an assumed parameter, not an estimate from data. With weight e^(-tau/45) the half-life is 45 x ln 2, about 31 days; the weight is about 37% at 45 days and about 14% at 90 days, when the next quarter of filings begins. The 60 day holding period is a design choice, not a fitted optimum.
 
 ---
 

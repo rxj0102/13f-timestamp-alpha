@@ -14,7 +14,8 @@ signal weight as a function of time elapsed since filing:
 
     staleness_weight = filing_urgency × exp(−days_since_filing / 45)
 
-The half-life of 45 days corresponds to one filing cycle. A position disclosed
+The 45 day decay constant is an assumed parameter (true half-life is
+45 x ln 2, about 31 days). A position disclosed
 at the last possible moment (urgency ≈ 1.0, days_since_filing = 0) starts with
 maximum weight. At 45 days post-filing, the weight decays to urgency × e⁻¹ ≈
 37% of the original. This decay is appropriate because quarterly 13F data is
