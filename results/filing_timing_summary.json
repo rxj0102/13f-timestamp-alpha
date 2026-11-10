@@ -1,0 +1,28 @@
+{
+  "period": "2014-03-31 to 2023-12-31",
+  "n_managers": 40,
+  "n_filings": 1493,
+  "median_day": 45.0,
+  "std_day": 1.9766340130968707,
+  "median_within_manager_std": 0.9319806066968381,
+  "share_on_deadline": 0.8050904219691896,
+  "share_one_bday_before": 0.13663764233087744,
+  "share_2_to_5_bdays_before": 0.04219691895512391,
+  "share_over_5_bdays_before": 0.0053583389149363695,
+  "share_after_deadline": 0.010716677829872739,
+  "n_early_bucket": 1,
+  "early_cut_day": 14.850000000000001,
+  "managers_median_below_40": 0,
+  "blackrock_median_day": 41.0,
+  "vanguard_median_day": 45.0,
+  "n_included": 9,
+  "included_filings": 313,
+  "included_share_on_deadline_or_1_before": 0.9648562300319489,
+  "population_2023q4": {
+    "n_filings": 7591,
+    "median_day": 39.0,
+    "share_by_day_15": 0.09419048873666183,
+    "share_by_day_30": 0.3070741667764458,
+    "share_day_40_plus": 0.4895270715320775
+  }
+}
