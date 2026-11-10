@@ -9,6 +9,7 @@ setup:
 
 reproduce:
 	uv run python scripts/build_manager_universe.py
+	uv run python scripts/build_ctr_log.py
 	uv run python scripts/filing_timing_study.py
 
 check:
