@@ -103,3 +103,5 @@ logs/
 # ─────────────────────────────────────────────
 !data/reference/
 !data/reference/*.csv
+
+.venv/
