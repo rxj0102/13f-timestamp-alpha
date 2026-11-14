@@ -103,3 +103,6 @@ logs/
 # ─────────────────────────────────────────────
 !data/reference/
 !data/reference/*.csv
+
+.venv/
+data/raw/edgar_cache/

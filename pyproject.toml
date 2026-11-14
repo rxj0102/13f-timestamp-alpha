@@ -1,0 +1,31 @@
+[project]
+name = "13f-timestamp-alpha"
+version = "0.1.0"
+description = "Research code for 13f-timestamp-alpha"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=4.9.3",
+    "pandas>=2.1.0",
+    "numpy>=1.26.0",
+    "pyarrow>=14.0.0",
+    "python-dateutil>=2.8.2",
+    "yfinance>=0.2.31",
+    "scipy>=1.11.0",
+    "statsmodels>=0.14.0",
+    "scikit-learn>=1.3.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.26.0",
+    "tqdm>=4.66.0",
+    "python-dotenv>=1.0.0",
+    "pytest>=7.0"
+]
+
+[dependency-groups]
+dev = ["pytest>=7.4"]
+
+[tool.uv]
+package = false
