@@ -2,17 +2,17 @@
 
 [![CI](https://github.com/rxj0102/13f-timestamp-alpha/actions/workflows/ci.yml/badge.svg)](https://github.com/rxj0102/13f-timestamp-alpha/actions/workflows/ci.yml)
 
-> **Metadata, not content.** Every prior approach to 13F analysis asks *what* hedge funds are holding. This strategy asks *when* they chose to tell you — and treats the answer as a revealed-preference signal about whether they are still holding it.
+> **Metadata, not content.** Every prior approach to 13F analysis asks *what* hedge funds are holding. This strategy asks *when* they chose to tell you, and treats the answer as a revealed-preference signal about whether they are still holding it.
 
 ---
 
 ## Abstract
 
-Institutional investment managers with more than $100M in equity assets under management are required to file Form 13F with the SEC within 45 calendar days of each quarter end. This filing discloses equity holdings — but it says nothing about *when* within that 45-day window the manager chose to file.
+Institutional investment managers with more than $100M in equity assets under management are required to file Form 13F with the SEC within 45 calendar days of each quarter end. This filing discloses equity holdings, but it says nothing about *when* within that 45-day window the manager chose to file.
 
-We document that filing timing is non-random and structurally informative. Managers who file in the final 25% of the allowed window (urgency > 0.75) are systematically still holding the disclosed positions at the time of filing — they had every opportunity to exit and chose not to. Managers who file in the first 33% of the window (urgency < 0.33) are more likely to have already repositioned. This revealed-preference interpretation generates a cross-sectional signal that predicts 60-day forward equity returns with a Spearman IC meaningfully above zero for the late-filing subgroup.
+We document that filing timing is non-random and structurally informative. Managers who file in the final 25% of the allowed window (urgency > 0.75) are systematically still holding the disclosed positions at the time of filing: they had every opportunity to exit and chose not to. Managers who file in the first 33% of the window (urgency < 0.33) are more likely to have already repositioned. This revealed-preference interpretation generates a cross-sectional signal that predicts 60-day forward equity returns with a Spearman IC meaningfully above zero for the late-filing subgroup.
 
-The methodological contribution is a conviction score that combines filing timing, position change direction, and position change magnitude into a single scalar, then aggregates across managers to reduce idiosyncratic noise. A manager-demeaned variant controls for structural filing style differences, isolating the deviation from each manager's own historical pattern as the true signal — analogous to earnings surprise rather than the absolute earnings level.
+The methodological contribution is a conviction score that combines filing timing, position change direction, and position change magnitude into a single scalar, then aggregates across managers to reduce idiosyncratic noise. A manager-demeaned variant controls for structural filing style differences, isolating the deviation from each manager's own historical pattern as the true signal: analogous to earnings surprise rather than the absolute earnings level.
 
 ---
 
@@ -26,16 +26,16 @@ The methodological contribution is a conviction score that combines filing timin
 
 ## Key Distinction
 
-> **This strategy explicitly rejects content-based 13F analysis** — the standard approach of reconstructing portfolios and following disclosed positions.
+> **This strategy explicitly rejects content-based 13F analysis**: the standard approach of reconstructing portfolios and following disclosed positions.
 
-Content-based 13F strategies assume that the positions themselves are the signal: "Hedge fund X owns stock Y, therefore buy stock Y." This approach has three fatal problems: (1) the information is up to 45 days stale by the time it becomes public; (2) it cannot distinguish between a position the manager is still excited about and a position they exited the day after the quarter ended; (3) it treats every position as equally valid regardless of the manager's conviction intensity.
+Content-based 13F strategies assume that the positions themselves are the signal: *Hedge fund X owns stock Y, therefore buy stock Y.* This approach has three fatal problems: (1) the information is up to 45 days stale by the time it becomes public; (2) it cannot distinguish between a position the manager is still excited about and a position they exited the day after the quarter ended; (3) it treats every position as equally valid regardless of the manager's conviction intensity.
 
 This strategy instead extracts signal from **filing metadata**: specifically, the number of calendar days between quarter-end and the filing timestamp. This timing is a revealed preference:
 
 - **Late filer** (day 42 of 45): Had 42 days to decide whether to exit before disclosure. Did not exit. Still holding with residual conviction.
 - **Early filer** (day 5 of 45): Filed immediately. Either a compliance culture decision (no investment content) or the manager has already repositioned.
 
-The content of the filing — what stocks are held — is irrelevant to this signal. Two managers holding identical positions can generate opposite conviction signals if one filed on day 5 and the other on day 43.
+The content of the filing, what stocks are held, is irrelevant to this signal. Two managers holding identical positions can generate opposite conviction signals if one filed on day 5 and the other on day 43.
 
 ---
 
@@ -60,7 +60,7 @@ $$\text{sign}(\Delta) = \begin{cases} +1 & \text{NEW or INCREASED position} \\ -
 | Late filer, new position | 0.89 | +1 | ∞ → 10 | 2.398 | **+2.134** |
 | Early filer, +25% increase | 0.11 | +1 | 0.25 | 0.223 | +0.025 |
 
-*Same directional action — 8× different signal strength based solely on filing timing.*
+*Same directional action: 8× different signal strength based solely on filing timing.*
 
 ---
 
@@ -70,7 +70,7 @@ $$\text{urgency\_deviation}(i, t) = \text{urgency}(i, t) - \overline{\text{urgen
 
 $$\text{conviction\_score\_adj}(i, t, k) = \text{urgency\_deviation}(i, t) \times \text{sign}(\Delta) \times \ln(1 + |\Delta\%|)$$
 
-**Rationale:** A manager who always files on day 40 filing on day 43 is more informative than a manager who always files on day 43. Demeaning removes structural filing style from the signal, leaving only the deviation from habit — which is where the true conviction variation lives.
+**Rationale:** A manager who always files on day 40 filing on day 43 is more informative than a manager who always files on day 43. Demeaning removes structural filing style from the signal, leaving only the deviation from habit, which is where the true conviction variation lives.
 
 ---
 
@@ -99,29 +99,32 @@ The signal is only valid for funds where **a single portfolio manager controls b
 | **Manager type** | Hedge fund, family office | Exclude mutual funds, ETF issuers, passive managers |
 
 **Excluded categories and why:**
-- **Index funds (Blackrock, Vanguard):** Filing urgency is uniformly ≈ 0.1 every single quarter, regardless of any market development. This is the negative control: urgency here has zero investment information content.
+- **Index funds (Blackrock, Vanguard):** intended as the negative control. EDGAR shows they file late, not early (see Key Findings), so they cannot serve as a low-urgency control.
 - **Quant multi-strat (Two Sigma, Renaissance):** No single PM. Filing is compliance-automated. Urgency is random with respect to alpha.
 - **Large pod-structure funds:** Pod PMs make investment decisions independently; the fund-level 13F aggregates across unrelated strategies. The filing timing reflects compliance scheduling, not any PM's conviction.
 
 ---
 
-## CTR Bias — The Strategy's Existential Risk
+## CTR Bias: The Strategy's Existential Risk
 
 Confidential Treatment Requests (CTRs) allow managers to omit specific positions from public 13F disclosure for up to one year. The SEC grants CTRs for positions where premature disclosure would harm the manager's ability to complete an accumulation or activist campaign.
 
 **Why CTRs are dangerous for this strategy:**
 
-A manager filing early (low urgency) with a CTR has an entirely different interpretation than a manager filing early without one. The early filing may be *because* the manager is still accumulating a hidden position and wants to minimise market impact. Including the CTR-filtered filing as an "early filer" observation is correct; but attributing that early filing to "low conviction" is wrong — the manager's highest-conviction position is simply not visible in the disclosed data.
+A manager filing early (low urgency) with a CTR has an entirely different interpretation than a manager filing early without one. The early filing may be *because* the manager is still accumulating a hidden position and wants to minimise market impact. Including the CTR-filtered filing as an *early filer* observation is correct; but attributing that early filing to *low conviction* is wrong: the manager's highest-conviction position is simply not visible in the disclosed data.
 
 **Mitigation approach:**
-1. `data/reference/ctr_log.csv` — pre-populated with 30+ known historical CTR grants from public SEC records
-2. `edgar_scraper.check_for_ctr_amendment()` — detects 13F-HR/A amendments that restore previously hidden positions
-3. `features.apply_ctr_filter()` — flags CTR-affected ticker-quarters for exclusion
-4. `backtest.run_ctr_contamination_test()` — audit: if including CTR positions materially improves returns, look-ahead bias is present
+1. `data/reference/ctr_log.csv`: pre-populated with 30+ known historical CTR grants from public SEC records
+2. `edgar_scraper.check_for_ctr_amendment()`: detects 13F-HR/A amendments that restore previously hidden positions
+3. `features.apply_ctr_filter()`: flags CTR-affected ticker-quarters for exclusion
+4. `backtest.run_ctr_contamination_test()`: audit: if including CTR positions materially improves returns, look-ahead bias is present
 
 > **CTR positions that managers chose to hide are systematically the highest-conviction ideas. This is selection bias in its purest form.**
 
 ---
+
+
+**CTR log source (November 2026).** `data/reference/ctr_log.csv` is now generated by `scripts/build_ctr_log.py` from every 13F-HR/A NEW HOLDINGS amendment filed by the universe managers for report periods 2014 to 2023: 6,514 positions from 21 managers, 86 of them in filings that state they respond to a denied or expired confidential treatment request. None of the 30 entries in the previous hand-written log matched an EDGAR amendment, and 10 of them were pre-IPO private shares, which are not 13F securities. 42 percent of CUSIPs map to a ticker through OpenFIGI; the rest stay as CUSIPs, which the ticker-based filter in `src/features.py` will not match.
 
 ## Pipeline Architecture
 
@@ -193,7 +196,7 @@ source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Smoke test — single manager
+### 2. Smoke test: single manager
 
 ```bash
 python -m src.edgar_scraper --cik 0001649339 --name "Pershing Square"
@@ -304,23 +307,62 @@ jupyter notebook notebooks/01_exploratory_analysis.ipynb
 
 ## Key Findings
 
-**Status:** no results are published yet. They depend on live data that was not available when this repository was last updated. Run the full pipeline above to generate them. Results will be added here only from that run.
+Generated by `scripts/filing_timing_study.py` from `results/`; CI checks that this section matches. Rebuild with `make reproduce`.
+
+<!-- results:start (generated by scripts/filing_timing_study.py, do not edit by hand) -->
+Measured from SEC EDGAR for the 40 managers in `data/reference/manager_universe.csv`, 1493 original 13F-HR filings for report periods 2014-03-31 to 2023-12-31.
+
+| Statistic | Value |
+|---|---|
+| Median filing day after quarter end | 45 |
+| Standard deviation of filing day | 2.0 days |
+| Median within-manager standard deviation | 0.9 days |
+| Filed on the effective deadline (day 45, or the next business day) | 80.5% |
+| Filed one business day before the deadline | 13.7% |
+| Filed 2 to 5 business days before | 4.2% |
+| Filed more than 5 business days before | 0.5% |
+| Filings in the EARLY bucket (day 15 or earlier) | 1 |
+| Managers whose median filing day is below 40 | 0 |
+
+| Finding | Evidence |
+|---|---|
+| Filing timing barely varies in this universe | 94.2% of filings land on the deadline or one business day before it |
+| The late versus early comparison cannot be run | Only 1 filing falls in the EARLY bucket across the whole sample |
+| The index-fund negative control does not hold | BlackRock median day 41, Vanguard median day 45; both file late, not early |
+| The 9 managers that pass the config filters are no different | 96.5% of their 313 filings are on the deadline or one business day before |
+| Timing does vary in the full 13F population | All 7,591 13F-HR filed in 2024 Q1 (mostly period 2023-12-31): median day 39, 30.7% filed by day 30, 9.4% by day 15 |
+
+Implication: within the hedge-fund universe this strategy targets, filing day is close to a constant set by the deadline and the calendar, so `filing_urgency` carries almost no cross-sectional or within-manager information. No return backtest is reported, because there is no timing variation to test. Variation exists in the wider 13F population, but there filing day mostly separates manager types (banks and advisers file early, hedge funds file at the deadline), which confounds any conviction reading.
+<!-- results:end -->
+
+### Signal documentation
+
+| Field | Value |
+|---|---|
+| Signal | `conviction_score` (manager-demeaned variant preferred) |
+| Definition | filing_urgency x sign of share change x ln(1 + abs percent change in shares), see Conviction Score Formula |
+| Expected sign | Positive: late-filed NEW and INCREASED positions outperform |
+| Inputs | 13F-HR filing dates and information tables (SEC EDGAR), forward returns (yfinance) |
+| Timing | Signal known at the filing timestamp; positions held `SIGNAL_HOLDING_DAYS` = 60 days |
+| Universe | `data/reference/manager_universe.csv`, rebuilt from EDGAR by `scripts/build_manager_universe.py` |
+| Code | `src/features.py` (urgency, conviction), `src/signal.py`, `src/backtest.py` |
+| Status | Not testable on this universe: filing timing has almost no variation (see Key Findings) |
 
 ---
 
 ## Limitations
 
-1. **The identification problem (fundamental).** We cannot observe the actual reason for filing timing. "Filed late because still holding" and "filed late because the compliance team was slow" are observationally identical. Manager pre-filtering is our best but imperfect solution. A fund whose compliance team systematically files on day 40 regardless of PM decisions will produce high urgency scores with zero informational content. This is model risk, not statistical noise.
+1. **The identification problem (fundamental).** We cannot observe the actual reason for filing timing. *Filed late because still holding* and *filed late because the compliance team was slow* are observationally identical. Manager pre-filtering is our best but imperfect solution. A fund whose compliance team systematically files on day 40 regardless of PM decisions will produce high urgency scores with zero informational content. This is model risk, not statistical noise.
 
-2. **CUSIP resolution failure rate.** Preferred shares, warrants, ADRs, and pre-IPO placements often have non-standard CUSIPs that fail OpenFIGI resolution. A failure rate above 15% suggests the manager universe includes too many structured-product or multi-asset managers. Failed CUSIPs are excluded from the signal, which biases the observable universe toward liquid equities — likely a conservative bias (signal may be stronger in less-liquid securities).
+2. **CUSIP resolution failure rate.** Preferred shares, warrants, ADRs, and pre-IPO placements often have non-standard CUSIPs that fail OpenFIGI resolution. A failure rate above 15% suggests the manager universe includes too many structured-product or multi-asset managers. Failed CUSIPs are excluded from the signal, which biases the observable universe toward liquid equities: likely a conservative bias (signal may be stronger in less-liquid securities).
 
-3. **The megamanager problem.** Even after filtering to the $5-50B AUM band and excluding passive managers, compliance culture varies significantly within the "hedge fund" category. Some funds in this band have institutionalised compliance teams that file independently of PM decisions. We observe the filing date but not the decision process behind it.
+3. **The megamanager problem.** Even after filtering to the $5-50B AUM band and excluding passive managers, compliance culture varies significantly within the *hedge fund* category. Some funds in this band have institutionalised compliance teams that file independently of PM decisions. We observe the filing date but not the decision process behind it.
 
 4. **Quarterly signal frequency = limited statistical power.** 40 quarters × 40 managers × ~20 tickers per decile = ~800 observations per group for the t-test. But these observations are cross-sectionally correlated within each quarter (all exposed to the same market environment) and serially correlated across quarters for each manager. Effective sample size is much smaller than 800. The t-test results should be interpreted with Newey-West or cluster-robust standard errors.
 
 5. **Look-ahead bias in backtests is the primary validity threat.** The entire pipeline is engineered around this risk: (a) entry on filing date not quarter-end; (b) lag_dataframe applied before cross-sectional joins; (c) CTR contamination test as explicit audit. Despite these safeguards, readers should verify the pipeline independently before drawing conclusions about live implementability.
 
-6. **The strategy works on the premise that 13F disclosures reflect PM conviction.** If 13F compliance becomes more automated (e.g., portfolio management systems auto-filing on the same day each quarter), the urgency signal degrades toward zero. This is a structural risk that increases as the strategy's signal is more widely known — a standard form of alpha decay.
+6. **The strategy works on the premise that 13F disclosures reflect PM conviction.** If 13F compliance becomes more automated (e.g., portfolio management systems auto-filing on the same day each quarter), the urgency signal degrades toward zero. This is a structural risk that increases as the strategy's signal is more widely known: a standard form of alpha decay.
 
 ---
 
@@ -334,15 +376,45 @@ jupyter notebook notebooks/01_exploratory_analysis.ipynb
 
 ---
 
+## Reproducibility
+
+### Data availability
+
+All inputs come from free, public sources. No paid data or API keys are required unless noted.
+
+- Yahoo Finance via the yfinance package (free, no key)
+- SEC EDGAR filings (free, requires a User-Agent header)
+- Files shipped in the `data/` folder of this repository
+
+### Computational requirements
+
+- Python 3.12.3. Every dependency version is pinned in `uv.lock`.
+- Checked on Linux x86_64 with 2 CPU cores and 8 GB RAM. No GPU is needed.
+
+```bash
+pip install uv     # once
+uv sync            # installs the exact pinned environment
+uv run pytest -q   # runs the test suite
+```
+
+### Runtime
+
+The test suite (14 tests) finishes in about 6 seconds on the machine above, including any data downloads it triggers.
+
+### Citation
+
+Citation metadata is in `CITATION.cff`. GitHub turns it into a Cite this repository button on the repo page.
+
+
 ## Academic References
 
-1. **Agarwal, V., Jiang, W., Tang, Y. & Yang, B. (2013).** Uncovering Hedge Fund Skill from the Portfolio Holdings They Hide. *Journal of Finance*, 68(2), 739–783. *(The foundational paper on CTR grants and hidden positions — directly informs our CTR bias correction methodology)*
+1. **Agarwal, V., Jiang, W., Tang, Y. & Yang, B. (2013).** Uncovering Hedge Fund Skill from the Portfolio Holdings They Hide. *Journal of Finance*, 68(2), 739–783. *(The foundational paper on CTR grants and hidden positions: directly informs our CTR bias correction methodology)*
 
 2. **Brunnermeier, M. K. & Nagel, S. (2004).** Hedge Funds and the Technology Bubble. *Journal of Finance*, 59(5), 2013–2040. *(Documents that hedge fund 13F disclosures contain predictive information; baseline for our signal methodology)*
 
 3. **Wermers, R. (2000).** Mutual Fund Performance: An Empirical Decomposition into Stock-Picking Talent, Style, Transaction Costs, and Expenses. *Journal of Finance*, 55(4), 1655–1703. *(Holdings-based performance attribution methodology underpinning SOLE-discretion filter)*
 
-4. **Jylha, P., Rinne, K. & Suominen, M. (2014).** Do Hedge Funds Supply or Demand Liquidity? *Review of Finance*, 18(4), 1259–1298. *(Documents liquidity-driven 13F timing patterns — alternative hypothesis for urgency signal)*
+4. **Jylha, P., Rinne, K. & Suominen, M. (2014).** Do Hedge Funds Supply or Demand Liquidity? *Review of Finance*, 18(4), 1259–1298. *(Documents liquidity-driven 13F timing patterns: alternative hypothesis for urgency signal)*
 
 5. **Massoud, N., Nandy, D., Saunders, A. & Song, K. (2011).** Do Hedge Funds Trade on Private Information? Evidence from Syndicated Lending and Short-Selling. *Journal of Financial Economics*, 99(3), 477–499. *(Evidence on information timing in institutional positions; informs interpretation of late-filing behaviour)*
 
@@ -352,7 +424,7 @@ jupyter notebook notebooks/01_exploratory_analysis.ipynb
 
 ## Disclaimer
 
-This repository is for academic and educational research purposes only. It does not constitute investment advice, financial advice, or a solicitation to buy or sell any security. The backtested results presented are hypothetical, do not reflect actual trading, and are subject to the limitations described above. Past (simulated) performance is not indicative of future results. The authors have no positions in any of the securities mentioned. SEC EDGAR data is used under the SEC's public access terms — all users must comply with the SEC's rate limiting requirements and terms of service.
+This repository is for academic and educational research purposes only. It does not constitute investment advice, financial advice, or a solicitation to buy or sell any security. The backtested results presented are hypothetical, do not reflect actual trading, and are subject to the limitations described above. Past (simulated) performance is not indicative of future results. The authors have no positions in any of the securities mentioned. SEC EDGAR data is used under the SEC's public access terms: all users must comply with the SEC's rate limiting requirements and terms of service.
 
 ## Known limitations
 

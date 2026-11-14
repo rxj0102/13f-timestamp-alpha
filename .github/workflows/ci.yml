@@ -18,3 +18,5 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
+      - name: README findings match results/
+        run: python scripts/filing_timing_study.py --check

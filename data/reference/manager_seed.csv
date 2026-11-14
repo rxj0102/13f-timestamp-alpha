@@ -1,0 +1,41 @@
+manager_name,cik,manager_type,primary_strategy
+Pershing Square Capital Management,0001336528,hedge_fund,activist
+Third Point LLC,0001040273,hedge_fund,long_short_equity
+Elliott Investment Management,0001791786,hedge_fund,activist
+Starboard Value LP,0001517137,hedge_fund,activist
+ValueAct Capital Management,0001418814,hedge_fund,activist
+Corvex Management LP,0001535472,hedge_fund,activist
+Icahn Capital LP,0000921669,hedge_fund,activist
+Glenview Capital Management,0001138995,hedge_fund,long_short_equity
+Tiger Global Management,0001167483,hedge_fund,long_short_equity
+Appaloosa Management,0001006438,hedge_fund,long_short_equity
+Dragoneer Investment Group,0001602189,hedge_fund,long_short_equity
+Coatue Management,0001135730,hedge_fund,long_short_equity
+D1 Capital Partners,0001747057,hedge_fund,long_short_equity
+Senator Investment Group,0001443689,hedge_fund,long_short_equity
+Melvin Capital Management,0001628110,hedge_fund,long_short_equity
+Jana Partners LLC,0001159159,hedge_fund,activist
+Sachem Head Capital Management,0001582090,hedge_fund,activist
+Engaged Capital LLC,0001559771,hedge_fund,activist
+Hudson Bay Capital Management,0001393825,hedge_fund,long_short_equity
+Luxor Capital Group,0001316580,hedge_fund,long_short_equity
+Greenlight Capital,0001079114,hedge_fund,long_short_equity
+Baupost Group,0001061768,hedge_fund,long_short_equity
+Soros Fund Management,0001029160,family_office,global_macro
+Duquesne Family Office,0001536411,family_office,global_macro
+Lone Pine Capital,0001061165,hedge_fund,long_short_equity
+Viking Global Investors,0001103804,hedge_fund,long_short_equity
+Maverick Capital,0000934639,hedge_fund,long_short_equity
+Durable Capital Partners,0001798849,hedge_fund,long_short_equity
+Light Street Capital Management,0001569049,hedge_fund,long_short_equity
+Steadfast Capital Management,0001214822,hedge_fund,long_short_equity
+Moore Capital Management,0001448574,hedge_fund,global_macro
+Tudor Investment Corp,0000923093,hedge_fund,global_macro
+Caxton Associates,0000872573,hedge_fund,global_macro
+Paulson & Co,0001035674,hedge_fund,long_short_equity
+Blackrock Inc,0001364742,hedge_fund,index_passive
+Vanguard Group,0000102909,hedge_fund,index_passive
+Two Sigma Investments,0001179392,hedge_fund,quant_multistrat
+Renaissance Technologies,0001037389,hedge_fund,quant_multistrat
+Citadel Advisors,0001423053,hedge_fund,quant_multistrat
+Eminence Capital LLC,0001107310,hedge_fund,long_short_equity
