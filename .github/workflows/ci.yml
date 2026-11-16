@@ -18,5 +18,10 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
-      - name: README findings match results/
+      - name: Rerun the study offline and confirm it reproduces the committed results
+        run: |
+          cp results/filing_timing_summary.json /tmp/committed.json
+          python scripts/filing_timing_study.py > /dev/null
+          diff /tmp/committed.json results/filing_timing_summary.json
+      - name: README matches results/
         run: python scripts/filing_timing_study.py --check
