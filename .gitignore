@@ -106,3 +106,6 @@ logs/
 
 .venv/
 data/raw/edgar_cache/
+
+# Form 13F data set extracts from scripts/build_confidential.py
+data/raw/f13/

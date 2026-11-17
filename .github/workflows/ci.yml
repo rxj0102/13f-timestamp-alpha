@@ -1,10 +1,8 @@
 name: ci
-
 on:
   push:
     branches: [main]
   pull_request:
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -18,10 +16,13 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
-      - name: Rerun the study offline and confirm it reproduces the committed results
+      - name: Rerun both parts offline and confirm the committed results reproduce
         run: |
-          cp results/filing_timing_summary.json /tmp/committed.json
+          cp results/hidden_summary.json /tmp/hidden.json
+          cp results/filing_timing_summary.json /tmp/timing.json
+          python scripts/hidden_study.py > /dev/null
+          python scripts/compare_metrics.py /tmp/hidden.json results/hidden_summary.json
           python scripts/filing_timing_study.py > /dev/null
-          diff /tmp/committed.json results/filing_timing_summary.json
-      - name: README matches results/
-        run: python scripts/filing_timing_study.py --check
+          diff /tmp/timing.json results/filing_timing_summary.json
+      - run: python scripts/render_hidden.py --check
+      - run: python scripts/filing_timing_study.py --check
