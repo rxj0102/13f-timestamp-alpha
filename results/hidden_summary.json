@@ -1,0 +1,462 @@
+{
+  "sample": {
+    "manager_quarters": 606,
+    "managers": 72,
+    "amendments": 1603,
+    "first_period": "2013-06-30",
+    "last_period": "2026-03-31",
+    "hidden_positions": 100862,
+    "shown_positions": 185992,
+    "securities": 14336,
+    "share_hidden_priced": 0.999068,
+    "median_days_to_reveal": 137.0,
+    "top_managers": [
+      "HBK INVESTMENTS L P",
+      "Davidson Kempner Capital Management LP",
+      "UBS OCONNOR LLC",
+      "NORGES BANK",
+      "Taconic Capital Advisors LP",
+      "Alyeska Investment Group, L.P."
+    ],
+    "top6_share_of_quarters": 0.396285,
+    "min_filers": 3
+  },
+  "results": {
+    "report|1": {
+      "hidden_ew": {
+        "mean": 0.0410973,
+        "t": 1.38993,
+        "quarters": 52,
+        "pairs": 532,
+        "median_pair": 0.00804789,
+        "share_positive": 0.590226
+      },
+      "shown_ew": {
+        "mean": 0.041649,
+        "t": 2.29802,
+        "quarters": 52,
+        "pairs": 532,
+        "median_pair": 0.0267837,
+        "share_positive": 0.639098
+      },
+      "diff_ew": {
+        "mean": -0.000551695,
+        "t": -0.0163277,
+        "quarters": 52,
+        "pairs": 532,
+        "median_pair": -0.00943286,
+        "share_positive": 0.449248
+      },
+      "diff_vw": {
+        "mean": 0.0186913,
+        "t": 0.59978,
+        "quarters": 52,
+        "pairs": 488,
+        "median_pair": -0.00025554,
+        "share_positive": 0.493852
+      },
+      "median_hidden_positions": 9.0,
+      "median_shown_positions": 145.0
+    },
+    "report|2": {
+      "hidden_ew": {
+        "mean": 0.0745498,
+        "t": 2.1219,
+        "quarters": 51,
+        "pairs": 525,
+        "median_pair": 0.00517197,
+        "share_positive": 0.533333
+      },
+      "shown_ew": {
+        "mean": 0.0702623,
+        "t": 2.8555,
+        "quarters": 51,
+        "pairs": 525,
+        "median_pair": 0.0430598,
+        "share_positive": 0.620952
+      },
+      "diff_ew": {
+        "mean": 0.00428743,
+        "t": 0.112375,
+        "quarters": 51,
+        "pairs": 525,
+        "median_pair": -0.0157961,
+        "share_positive": 0.449524
+      },
+      "diff_vw": {
+        "mean": 0.0375983,
+        "t": 1.03686,
+        "quarters": 51,
+        "pairs": 481,
+        "median_pair": -0.01309,
+        "share_positive": 0.463617
+      },
+      "median_hidden_positions": 9.0,
+      "median_shown_positions": 145.0
+    },
+    "report|4": {
+      "hidden_ew": {
+        "mean": 0.0711059,
+        "t": 3.00934,
+        "quarters": 49,
+        "pairs": 510,
+        "median_pair": 0.00899756,
+        "share_positive": 0.547059
+      },
+      "shown_ew": {
+        "mean": 0.160634,
+        "t": 4.05296,
+        "quarters": 49,
+        "pairs": 510,
+        "median_pair": 0.0663978,
+        "share_positive": 0.635294
+      },
+      "diff_ew": {
+        "mean": -0.0895281,
+        "t": -2.68167,
+        "quarters": 49,
+        "pairs": 510,
+        "median_pair": -0.0475932,
+        "share_positive": 0.443137
+      },
+      "diff_vw": {
+        "mean": -0.00165231,
+        "t": -0.0774143,
+        "quarters": 49,
+        "pairs": 466,
+        "median_pair": -0.0540396,
+        "share_positive": 0.409871
+      },
+      "median_hidden_positions": 9.0,
+      "median_shown_positions": 143.5
+    },
+    "reveal|1": {
+      "hidden_ew": {
+        "mean": 0.0355769,
+        "t": 2.1117,
+        "quarters": 50,
+        "pairs": 500,
+        "median_pair": 0.0,
+        "share_positive": 0.484
+      },
+      "shown_ew": {
+        "mean": 0.0147226,
+        "t": 0.962662,
+        "quarters": 50,
+        "pairs": 500,
+        "median_pair": 0.024488,
+        "share_positive": 0.618
+      },
+      "diff_ew": {
+        "mean": 0.0208543,
+        "t": 0.847974,
+        "quarters": 50,
+        "pairs": 500,
+        "median_pair": -0.0167146,
+        "share_positive": 0.424
+      },
+      "diff_vw": {
+        "mean": 0.0327447,
+        "t": 1.25469,
+        "quarters": 50,
+        "pairs": 457,
+        "median_pair": -0.016886,
+        "share_positive": 0.43326
+      },
+      "median_hidden_positions": 5.0,
+      "median_shown_positions": 126.5
+    },
+    "reveal|2": {
+      "hidden_ew": {
+        "mean": 0.0479133,
+        "t": 2.27784,
+        "quarters": 50,
+        "pairs": 494,
+        "median_pair": 0.000198916,
+        "share_positive": 0.506073
+      },
+      "shown_ew": {
+        "mean": 0.0422684,
+        "t": 1.61959,
+        "quarters": 50,
+        "pairs": 494,
+        "median_pair": 0.0385111,
+        "share_positive": 0.62753
+      },
+      "diff_ew": {
+        "mean": 0.00564485,
+        "t": 0.176559,
+        "quarters": 50,
+        "pairs": 494,
+        "median_pair": -0.0336954,
+        "share_positive": 0.40081
+      },
+      "diff_vw": {
+        "mean": 0.028622,
+        "t": 0.909525,
+        "quarters": 50,
+        "pairs": 451,
+        "median_pair": -0.0283298,
+        "share_positive": 0.412417
+      },
+      "median_hidden_positions": 5.0,
+      "median_shown_positions": 126.5
+    },
+    "reveal|4": {
+      "hidden_ew": {
+        "mean": 0.0871579,
+        "t": 2.28115,
+        "quarters": 47,
+        "pairs": 471,
+        "median_pair": 0.0200633,
+        "share_positive": 0.571125
+      },
+      "shown_ew": {
+        "mean": 0.173658,
+        "t": 4.48815,
+        "quarters": 47,
+        "pairs": 471,
+        "median_pair": 0.0811807,
+        "share_positive": 0.653928
+      },
+      "diff_ew": {
+        "mean": -0.0865003,
+        "t": -2.25528,
+        "quarters": 47,
+        "pairs": 471,
+        "median_pair": -0.0397111,
+        "share_positive": 0.418259
+      },
+      "diff_vw": {
+        "mean": -0.0133269,
+        "t": -0.638364,
+        "quarters": 47,
+        "pairs": 429,
+        "median_pair": -0.0400818,
+        "share_positive": 0.44289
+      },
+      "median_hidden_positions": 5.0,
+      "median_shown_positions": 131.0
+    }
+  },
+  "split_excluded": {
+    "report|1": {
+      "hidden_ew": {
+        "mean": 0.011545,
+        "t": 1.50671,
+        "quarters": 52,
+        "pairs": 516,
+        "median_pair": 0.00673776,
+        "share_positive": 0.571705
+      },
+      "shown_ew": {
+        "mean": 0.0339138,
+        "t": 2.18404,
+        "quarters": 52,
+        "pairs": 516,
+        "median_pair": 0.0251287,
+        "share_positive": 0.635659
+      },
+      "diff_ew": {
+        "mean": -0.0223689,
+        "t": -1.71485,
+        "quarters": 52,
+        "pairs": 516,
+        "median_pair": -0.0124635,
+        "share_positive": 0.445736
+      },
+      "diff_vw": {
+        "mean": -0.000404369,
+        "t": -0.0480926,
+        "quarters": 52,
+        "pairs": 484,
+        "median_pair": -0.00107914,
+        "share_positive": 0.493802
+      },
+      "median_hidden_positions": 8.0,
+      "median_shown_positions": 149.5
+    },
+    "report|2": {
+      "hidden_ew": {
+        "mean": 0.00643568,
+        "t": 0.724473,
+        "quarters": 51,
+        "pairs": 500,
+        "median_pair": 0.000383982,
+        "share_positive": 0.5
+      },
+      "shown_ew": {
+        "mean": 0.0545371,
+        "t": 2.60372,
+        "quarters": 51,
+        "pairs": 500,
+        "median_pair": 0.0414715,
+        "share_positive": 0.62
+      },
+      "diff_ew": {
+        "mean": -0.0481014,
+        "t": -2.65905,
+        "quarters": 51,
+        "pairs": 500,
+        "median_pair": -0.031417,
+        "share_positive": 0.42
+      },
+      "diff_vw": {
+        "mean": -0.0245003,
+        "t": -2.08703,
+        "quarters": 51,
+        "pairs": 473,
+        "median_pair": -0.0180677,
+        "share_positive": 0.437632
+      },
+      "median_hidden_positions": 7.0,
+      "median_shown_positions": 150.5
+    },
+    "report|4": {
+      "hidden_ew": {
+        "mean": 0.0143975,
+        "t": 1.11139,
+        "quarters": 49,
+        "pairs": 471,
+        "median_pair": -0.00741236,
+        "share_positive": 0.456476
+      },
+      "shown_ew": {
+        "mean": 0.131866,
+        "t": 3.79479,
+        "quarters": 49,
+        "pairs": 471,
+        "median_pair": 0.0672432,
+        "share_positive": 0.649682
+      },
+      "diff_ew": {
+        "mean": -0.117468,
+        "t": -3.5986,
+        "quarters": 49,
+        "pairs": 471,
+        "median_pair": -0.0758513,
+        "share_positive": 0.360934
+      },
+      "diff_vw": {
+        "mean": -0.0601355,
+        "t": -2.92434,
+        "quarters": 49,
+        "pairs": 457,
+        "median_pair": -0.0650091,
+        "share_positive": 0.367615
+      },
+      "median_hidden_positions": 6.0,
+      "median_shown_positions": 158.0
+    },
+    "reveal|1": {
+      "hidden_ew": {
+        "mean": 0.00322972,
+        "t": 0.500383,
+        "quarters": 50,
+        "pairs": 483,
+        "median_pair": -2.53754e-07,
+        "share_positive": 0.453416
+      },
+      "shown_ew": {
+        "mean": 0.0274453,
+        "t": 2.06373,
+        "quarters": 50,
+        "pairs": 483,
+        "median_pair": 0.020802,
+        "share_positive": 0.619048
+      },
+      "diff_ew": {
+        "mean": -0.0242156,
+        "t": -2.03394,
+        "quarters": 50,
+        "pairs": 483,
+        "median_pair": -0.0172404,
+        "share_positive": 0.426501
+      },
+      "diff_vw": {
+        "mean": -0.013092,
+        "t": -1.42019,
+        "quarters": 50,
+        "pairs": 449,
+        "median_pair": -0.0204352,
+        "share_positive": 0.427617
+      },
+      "median_hidden_positions": 5.0,
+      "median_shown_positions": 130.0
+    },
+    "reveal|2": {
+      "hidden_ew": {
+        "mean": 0.00412923,
+        "t": 0.48998,
+        "quarters": 49,
+        "pairs": 467,
+        "median_pair": 0.0,
+        "share_positive": 0.464668
+      },
+      "shown_ew": {
+        "mean": 0.0510325,
+        "t": 3.05854,
+        "quarters": 49,
+        "pairs": 467,
+        "median_pair": 0.0360264,
+        "share_positive": 0.625268
+      },
+      "diff_ew": {
+        "mean": -0.0469033,
+        "t": -3.28195,
+        "quarters": 49,
+        "pairs": 467,
+        "median_pair": -0.0412967,
+        "share_positive": 0.376874
+      },
+      "diff_vw": {
+        "mean": -0.025254,
+        "t": -1.97315,
+        "quarters": 49,
+        "pairs": 442,
+        "median_pair": -0.0349582,
+        "share_positive": 0.377828
+      },
+      "median_hidden_positions": 4.0,
+      "median_shown_positions": 134.0
+    },
+    "reveal|4": {
+      "hidden_ew": {
+        "mean": 0.0464523,
+        "t": 2.93805,
+        "quarters": 47,
+        "pairs": 436,
+        "median_pair": 0.00966116,
+        "share_positive": 0.534404
+      },
+      "shown_ew": {
+        "mean": 0.112323,
+        "t": 3.65382,
+        "quarters": 47,
+        "pairs": 436,
+        "median_pair": 0.0698538,
+        "share_positive": 0.637615
+      },
+      "diff_ew": {
+        "mean": -0.065871,
+        "t": -2.4295,
+        "quarters": 47,
+        "pairs": 436,
+        "median_pair": -0.0463518,
+        "share_positive": 0.433486
+      },
+      "diff_vw": {
+        "mean": -0.0205217,
+        "t": -0.880429,
+        "quarters": 47,
+        "pairs": 423,
+        "median_pair": -0.0430413,
+        "share_positive": 0.439716
+      },
+      "median_hidden_positions": 4.0,
+      "median_shown_positions": 147.5
+    }
+  },
+  "suspect_quarters_share": 0.0211644,
+  "primary": "report|2"
+}
