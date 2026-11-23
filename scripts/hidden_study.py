@@ -37,9 +37,10 @@ def rounded(x):
 def summarize(pairs: pd.DataFrame) -> dict:
     out = {}
     for (anchor, k), g in pairs.groupby(["anchor", "k"]):
+        L = int(k) - 1  # overlapping windows: Newey-West with k - 1 quarterly lags
         out[f"{anchor}|{k}"] = {
-            "hidden_ew": H.t_test_by_period(g, "hidden_ew"), "shown_ew": H.t_test_by_period(g, "shown_ew"),
-            "diff_ew": H.t_test_by_period(g, "diff_ew"), "diff_vw": H.t_test_by_period(g, "diff_vw"),
+            "hidden_ew": H.t_test_by_period(g, "hidden_ew", L), "shown_ew": H.t_test_by_period(g, "shown_ew", L),
+            "diff_ew": H.t_test_by_period(g, "diff_ew", L), "diff_vw": H.t_test_by_period(g, "diff_vw", L),
             "median_hidden_positions": float(g.n_hidden.median()), "median_shown_positions": float(g.n_shown.median())}
     return out
 
@@ -56,7 +57,7 @@ def figure(pairs: pd.DataFrame, out: Path) -> None:
     for anchor, name, color in (("report", "from the report date", "#2a78d6"), ("reveal", "from the reveal", "#eb6834")):
         for k in (1, 2, 4):
             g = pairs[(pairs.anchor == anchor) & (pairs.k == k)]
-            r = H.t_test_by_period(g, "diff_ew")
+            r = H.t_test_by_period(g, "diff_ew", k - 1)
             labels.append(f"{k}Q {name}")
             means.append(r["mean"] * 100)
             halves.append(abs(r["mean"] / r["t"]) * 1.96 * 100 if r["t"] else 0)

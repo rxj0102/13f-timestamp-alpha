@@ -173,12 +173,25 @@ def pair_returns(pos: pd.DataFrame, amend: pd.DataFrame, panel: pd.DataFrame,
     return out
 
 
-def t_test_by_period(df: pd.DataFrame, col: str) -> dict:
-    """Average across managers within each report quarter, then a t-test across quarters."""
-    by = df.dropna(subset=[col]).groupby("period")[col].mean()
+def t_test_by_period(df: pd.DataFrame, col: str, lags: int = 0) -> dict:
+    """Average across managers within each report quarter, then a t-test across quarters.
+
+    Windows longer than one quarter overlap from one report quarter to the next (a four
+    quarter window starting in Q1 shares three quarters with the one starting in Q2), so
+    the quarterly series is autocorrelated. Pass lags = k - 1 for a k quarter window: the
+    standard error is then Newey-West with that many lags (Bartlett weights). lags = 0 is
+    the plain t-test.
+    """
+    by = df.dropna(subset=[col]).groupby("period")[col].mean().sort_index()
     n = len(by)
-    m, sd = float(by.mean()), float(by.std(ddof=1))
-    t = m / (sd / sqrt(n)) if sd > 0 else float("nan")
+    m = float(by.mean())
+    e = by.to_numpy() - m
+    s2 = float(e @ e) / n
+    for j in range(1, min(lags, n - 1) + 1):
+        s2 += 2 * (1 - j / (lags + 1)) * float(e[j:] @ e[:-j]) / n
+    if lags == 0:
+        s2 = float(e @ e) / (n - 1) if n > 1 else float("nan")
+    t = m / sqrt(s2 / n) if s2 > 0 else float("nan")
     x = df[col].dropna()
     return {"mean": m, "t": t, "quarters": n, "pairs": int(len(x)), "median_pair": float(x.median()),
             "share_positive": float((x > 0).mean())}

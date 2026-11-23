@@ -20,11 +20,12 @@ def headline(m: dict) -> str:
     p, y4, rv = r["report|2"], r["report|4"], r["reveal|2"]
     checks = {
         "the primary difference is not significant": abs(p["diff_ew"]["t"]) < 1.96,
-        "over four quarters hidden trail shown, equal weighted": y4["diff_ew"]["mean"] < 0 and y4["diff_ew"]["t"] < -1.96,
+        "over four quarters hidden trail shown, but not significantly": y4["diff_ew"]["mean"] < 0 and abs(y4["diff_ew"]["t"]) < 1.96,
         "value weighted, the four quarter gap is not significant": abs(y4["diff_vw"]["t"]) < 1.96,
         "nothing tradable after the reveal": all(abs(r[k]["diff_ew"]["t"]) < 1.96 for k in ("reveal|1", "reveal|2")),
         "the median pair has hidden behind at every horizon": all(v["diff_ew"]["median_pair"] < 0 for v in r.values()),
         "the split check never favours hidden": all(v["diff_ew"]["mean"] < 0 for v in x.values()),
+        "the split check is significant at the primary horizon": x["report|2"]["diff_ew"]["t"] < -1.96,
         "almost every hidden position is priced": s["share_hidden_priced"] > 0.99,
     }
     failed = [k for k, ok in checks.items() if not ok]
@@ -38,7 +39,8 @@ def headline(m: dict) -> str:
         f"{p['shown_ew']['mean']:.1%} for the positions it showed, a difference of {p['diff_ew']['mean']:+.1%} "
         f"(t = {p['diff_ew']['t']:.2f}). In the typical manager-quarter the hidden positions do worse "
         f"(median {p['diff_ew']['median_pair']:+.1%}), and over four quarters they trail by "
-        f"{abs(y4['diff_ew']['mean']):.1%} (t = {y4['diff_ew']['t']:.2f}), though not when weighted by position size. "
+        f"{abs(y4['diff_ew']['mean']):.1%}, but the four quarter windows overlap from one quarter to the next and once that "
+        f"is allowed for the gap is not significant (t = {y4['diff_ew']['t']:.2f}). "
         f"After the reveal there is nothing to trade: over the next two quarters the difference is "
         f"{rv['diff_ew']['mean']:+.1%} (t = {rv['diff_ew']['t']:.2f})."
     )
@@ -53,7 +55,8 @@ def results(m: dict) -> str:
            f"{r['report|2']['median_shown_positions']:.0f} shown, and the median amendment is filed "
            f"{s['median_days_to_reveal']:.0f} days after quarter end. Returns are quarter-end price changes "
            f"without dividends; cells average across managers within a quarter, then across quarters, with "
-           f"the t-statistic across quarters.", "",
+           f"the t-statistic across quarters. Windows of k quarters overlap from one report quarter to the next, "
+           f"so their t-statistics use Newey-West errors with k - 1 lags.", "",
            "| Window | Quarters | Pairs | Hidden | Shown | Difference | t | Median pair | Value weighted | t |",
            "|---|---|---|---|---|---|---|---|---|---|"]
     for k, name in ROWS:
