@@ -111,3 +111,18 @@ def frozen_panel():
 def test_known_prices(frozen_panel, cusip):
     date, price = KNOWN[cusip]
     assert frozen_panel.loc[pd.Timestamp(date), cusip] == pytest.approx(price, rel=0.005)
+
+
+def test_t_test_by_period_uses_newey_west_for_overlapping_windows():
+    # A series that repeats each value for three quarters, as overlapping windows do,
+    # has a far larger long run variance than its plain variance suggests.
+    vals = np.repeat([0.05, -0.02, 0.04, 0.01, -0.03, 0.06, 0.02, -0.01], 3)
+    df = pd.DataFrame({"period": pd.period_range("2015Q1", periods=len(vals), freq="Q").astype(str), "x": vals})
+    plain = H.t_test_by_period(df, "x")
+    nw = H.t_test_by_period(df, "x", lags=3)
+    e = vals - vals.mean()
+    n = len(e)
+    s2 = e @ e / n + sum(2 * (1 - j / 4) * (e[j:] @ e[:-j]) / n for j in range(1, 4))
+    assert nw["t"] == pytest.approx(vals.mean() / np.sqrt(s2 / n))
+    assert abs(nw["t"]) < abs(plain["t"])
+    assert plain["t"] == pytest.approx(vals.mean() / (vals.std(ddof=1) / np.sqrt(n)))
